@@ -48,7 +48,7 @@ class AppRoot extends HTMLElement{
         }
       </style>
       <div class="frame">
-        <div class="bar">Hoja de Trabajo</div>
+        <div class="bar">Hoja de prueba</div>
         <div class="titleRow">
           <div class="logo">cLogo<br><small>207 × 101</small></div>
           <h1>Desarrollo Web 2025</h1>
