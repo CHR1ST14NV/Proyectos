@@ -1,10 +1,11 @@
-const lorem1 = `Imposuit sectamque naturaesuls tanto evolvit tonitruo motura elementaque lapeto
-ignotas longo boreas imaginis crescendo humanas pondera ferias ita adspirate.`;
+const lorem1 = `La educación digital avanza rápidamente en América Latina. Cada vez más 
+instituciones adoptan plataformas virtuales, inteligencia artificial y aulas híbridas para
+ mejorar el aprendizaje. Según el BID, más del 65% de los colegios públicos han incorporado 
+ herramientas tecnológicas desde 2023.`;
 
-const lorem2 = `Pace mortales turba seductaque inabilis crescendo nova locoque orbem.
-Locis nec flexi Nova terras. Colebant viseret adhuc primasque bacchata adspirate.
-Nullo ducis, undae cursus. Tanto toldemagno, densor dissimilit externique erat.
-Solo locoque mentisque os fracti undas ulia illas. Sponte legentibus inveniat rerum!`;
+const lorem2 = `América Latina duplicó su inversión en energías renovables en el último año. 
+Países como Chile, Brasil y Colombia lideran proyectos solares y eólicos a gran escala. Esto 
+forma parte de la estrategia climática para reducir emisiones en un 40% hacia 2030, según CEPAL.`;
 
 class AppRoot extends HTMLElement{
   constructor(){
@@ -48,20 +49,53 @@ class AppRoot extends HTMLElement{
         }
       </style>
       <div class="frame">
-        <div class="bar">Hoja de Trabajo</div>
+        <div class="bar">Hoja de Trabajo Grupo #6</div>
         <div class="titleRow">
-          <div class="logo">cLogo<br><small>207 × 101</small></div>
+          <div class="logo">
+              <img src="https://banner2.cleanpng.com/20180715/yvk/aav1gv6nz.webp" width="150" height="80" alt="Logotipo">
+          </div>
           <h1>Desarrollo Web 2025</h1>
         </div>
         <div class="grid">
           <section class="contentWrap">
-            <span class="ribbon">Contenidos hechos con Componentes Web</span>
-            <wc-section titulo="H3 Tema" texto="${lorem1}"></wc-section>
-            <wc-section titulo="H3 Tema" texto="${lorem2}"></wc-section>
+            <wc-section titulo="H3 Educación Digital" texto="${lorem1}"></wc-section>
+            <wc-section titulo="H3 Inversión en Energías Renovables" texto="${lorem2}"></wc-section>
           </section>
           <wc-news></wc-news>
         </div>
         <wc-footer></wc-footer>
+      </div>
+      <style>
+        :host {
+          --line: rgba(60, 213, 255, 1);
+          --bg: rgb(30, 35, 45);
+          --ink: rgb(255, 255, 255);
+          --muted: rgb(180, 180, 180);
+          --highlight: rgb(255, 221, 87);
+          --card: rgba(245, 245, 245, 0.05);
+        }
+
+        .frame {
+          background: var(--card);
+          border: 2px solid var(--line);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        .bar {
+          background: var(--line);
+          color: white;
+        }
+
+        .ribbon {
+          background: var(--highlight);
+          color: black;
+        }
+
+        body {
+          background: var(--bg);
+          color: var(--ink);
+        }
+      </style>
       </div>
     `;
   }
@@ -87,18 +121,19 @@ class WcSection extends HTMLElement{
         }
       </style>
       <article class="box">
-        <h3><span class="t">Tema</span><small>Web-Contenido</small></h3>
+        <h3><span class="t">Tema</span><small></small></h3>
         <p class="txt"></p>
-        <div class="thumbs">
-          <div class="ph">101 × 78</div>
-          <div class="ph">101 × 78</div>
-          <div class="ph">101 × 78</div>
-          <div class="ph">101 × 78</div>
-          <div class="ph">101 × 78</div>
+       <div class="thumbs">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" width="101" height="78" alt="Imagen 1">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" width="101" height="78" alt="Imagen 2">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" width="101" height="78" alt="Imagen 3">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" width="101" height="78" alt="Imagen 4">
+         <img src="https://media.elcomercio.com/wp-content/uploads/2025/04/chatgpt-imagenes-1024x683.jpg" width="101" height="78" alt="Imagen 5">
         </div>
       </article>
     `;
   }
+  
   connectedCallback(){ this._render(); }
   attributeChangedCallback(){ this._render(); }
   _render(){
@@ -122,15 +157,33 @@ class WcNews extends HTMLElement{
     ];
     this.shadowRoot.innerHTML = `
       <style>
-        aside{ border:2px solid var(--line); padding:12px; background:#f2f2f2; height:100%; }
-        h2{ margin:0 0 8px 0; text-align:right }
-        .k{ display:block; text-align:right; color:var(--muted); margin-bottom:8px; }
-        ul{ margin:0; padding-left:16px; }
-        li{ margin:8px 0; }
+       aside {
+  border: 2px solid var(--line);
+  padding: 12px;
+  background: var(--white);
+  height: 100%;
+}
+h2 {
+  margin: 0 0 8px 0;
+  text-align: center; 
+  color: var(--accent);
+}
+.k {
+  display: block;
+  text-align: right;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+ul {
+  margin: 0;
+  padding-left: 16px;
+}
+li {
+  margin: 8px 0;
+}
       </style>
       <aside>
         <h2>H2 Noticias</h2>
-        <span class="k">cNoticias</span>
         <ul class="list"></ul>
       </aside>
     `;
@@ -158,7 +211,7 @@ class WcFooter extends HTMLElement{
       </style>
       <footer>
         <h2>H2 Pie de página</h2>
-        <div class="meta">cPie</div>
+        <div class="meta"></div>
         <div class="cols">
           <p>regio gravitate acervo legebantur fulit fulgura lapidosos non secrevit vos subsidere obliguis rerum sibi flexi non nonndum spectent caeleste membra</p>
           <p>legebantur di caligine solidumque speciem</p>
@@ -169,108 +222,3 @@ class WcFooter extends HTMLElement{
 }
 customElements.define('wc-footer', WcFooter);
 
-
-const SECTION_IMAGES = [];
-SECTION_IMAGES[0] = [
-  "https://share.google/images/m84wohzOYthat1Fjb",
-  "https://share.google/images/m84wohzOYthat1Fjb",
-  "https://share.google/images/m84wohzOYthat1Fjb",
-  "https://share.google/images/m84wohzOYthat1Fjb",
-  "https://share.google/images/m84wohzOYthat1Fjb"
-];
-SECTION_IMAGES[1] = [
-  "https://share.google/images/bn6uY2o9DM7SgFMyi",
-  "https://share.google/images/bn6uY2o9DM7SgFMyi",
-  "https://share.google/images/bn6uY2o9DM7SgFMyi",
-  "https://share.google/images/bn6uY2o9DM7SgFMyi",
-  "https://share.google/images/bn6uY2o9DM7SgFMyi"
-];
-
-
-/** Utilidad: inyecta <a><img> en lugar de los placeholders 101×78 */
-function applyImagesToSection(sectionEl, urls = []) {
-  try {
-    if (!sectionEl || !sectionEl.shadowRoot) return;
-    const sr = sectionEl.shadowRoot;
-
-    // Contenedor de thumbnails en tu componente
-    const thumbsGrid = sr.querySelector('.thumbs');
-    if (!thumbsGrid) return;
-
-    // Si el dev usó slots (wc-thumb), respetamos y no sobreescribimos.
-    const slot = sr.querySelector('slot[name="thumb"]');
-    const assigned = slot ? slot.assignedElements({ flatten: true }) : [];
-    if (assigned && assigned.length > 0) return;
-
-    // Tomamos hasta 5 URLs
-    const links = (urls || []).slice(0, 5);
-
-    // Busca placeholders actuales
-    const placeholders = Array.from(thumbsGrid.querySelectorAll('.ph'));
-
-    // Reemplaza cada placeholder con <a><img>
-    for (let i = 0; i < Math.min(placeholders.length, links.length); i++) {
-      const url = links[i];
-      if (!url) continue;
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noreferrer noopener';
-      a.style.display = 'block';
-      a.style.width = '101px';
-      a.style.height = '78px';
-      a.style.position = 'relative';
-
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = `Imagen ${i + 1}`;
-      img.style.position = 'absolute';
-      img.style.inset = '0';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.border = '2px solid #555';
-      img.style.background = '#fff';
-
-      a.appendChild(img);
-      placeholders[i].replaceWith(a);
-    }
-  } catch (e) {
-    console.warn('applyImagesToSection() error:', e);
-  }
-}
-
-/** 2) Al estar listo el árbol, aplicamos las imágenes por orden */
-function hydrateAllSections() {
-  const appRoot = document.querySelector('app-root');
-  if (!appRoot || !appRoot.shadowRoot) return;
-
-  // Busca todas las <wc-section> dentro del shadow de app-root
-  const sections = Array.from(appRoot.shadowRoot.querySelectorAll('wc-section'));
-
-  sections.forEach((section, idx) => {
-    const urls = SECTION_IMAGES[idx] || [];
-    applyImagesToSection(section, urls);
-  });
-}
-
-/** 3) Ejecuta cuando el DOM esté listo y tras definir los custom elements */
-function whenReady(fn) {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    queueMicrotask(fn);
-  } else {
-    window.addEventListener('DOMContentLoaded', fn, { once: true });
-  }
-}
-
-whenReady(() => {
-  // Esperar a que estén definidos los elementos y renderizado el shadow
-  Promise.allSettled([
-    customElements.whenDefined('app-root'),
-    customElements.whenDefined('wc-section')
-  ]).then(() => {
-    // Pequeño delay para asegurar que el HTML interno ya está en el shadow
-    setTimeout(hydrateAllSections, 0);
-  });
-});
