@@ -168,3 +168,109 @@ class WcFooter extends HTMLElement{
   }
 }
 customElements.define('wc-footer', WcFooter);
+
+
+const SECTION_IMAGES = [];
+SECTION_IMAGES[0] = [
+  "https://share.google/images/m84wohzOYthat1Fjb",
+  "https://share.google/images/m84wohzOYthat1Fjb",
+  "https://share.google/images/m84wohzOYthat1Fjb",
+  "https://share.google/images/m84wohzOYthat1Fjb",
+  "https://share.google/images/m84wohzOYthat1Fjb"
+];
+SECTION_IMAGES[1] = [
+  "https://share.google/images/bn6uY2o9DM7SgFMyi",
+  "https://share.google/images/bn6uY2o9DM7SgFMyi",
+  "https://share.google/images/bn6uY2o9DM7SgFMyi",
+  "https://share.google/images/bn6uY2o9DM7SgFMyi",
+  "https://share.google/images/bn6uY2o9DM7SgFMyi"
+];
+
+
+/** Utilidad: inyecta <a><img> en lugar de los placeholders 101×78 */
+function applyImagesToSection(sectionEl, urls = []) {
+  try {
+    if (!sectionEl || !sectionEl.shadowRoot) return;
+    const sr = sectionEl.shadowRoot;
+
+    // Contenedor de thumbnails en tu componente
+    const thumbsGrid = sr.querySelector('.thumbs');
+    if (!thumbsGrid) return;
+
+    // Si el dev usó slots (wc-thumb), respetamos y no sobreescribimos.
+    const slot = sr.querySelector('slot[name="thumb"]');
+    const assigned = slot ? slot.assignedElements({ flatten: true }) : [];
+    if (assigned && assigned.length > 0) return;
+
+    // Tomamos hasta 5 URLs
+    const links = (urls || []).slice(0, 5);
+
+    // Busca placeholders actuales
+    const placeholders = Array.from(thumbsGrid.querySelectorAll('.ph'));
+
+    // Reemplaza cada placeholder con <a><img>
+    for (let i = 0; i < Math.min(placeholders.length, links.length); i++) {
+      const url = links[i];
+      if (!url) continue;
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noreferrer noopener';
+      a.style.display = 'block';
+      a.style.width = '101px';
+      a.style.height = '78px';
+      a.style.position = 'relative';
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = `Imagen ${i + 1}`;
+      img.style.position = 'absolute';
+      img.style.inset = '0';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.border = '2px solid #555';
+      img.style.background = '#fff';
+
+      a.appendChild(img);
+      placeholders[i].replaceWith(a);
+    }
+  } catch (e) {
+    console.warn('applyImagesToSection() error:', e);
+  }
+}
+
+/** 2) Al estar listo el árbol, aplicamos las imágenes por orden */
+function hydrateAllSections() {
+  const appRoot = document.querySelector('app-root');
+  if (!appRoot || !appRoot.shadowRoot) return;
+
+  // Busca todas las <wc-section> dentro del shadow de app-root
+  const sections = Array.from(appRoot.shadowRoot.querySelectorAll('wc-section'));
+
+  sections.forEach((section, idx) => {
+    const urls = SECTION_IMAGES[idx] || [];
+    applyImagesToSection(section, urls);
+  });
+}
+
+/** 3) Ejecuta cuando el DOM esté listo y tras definir los custom elements */
+function whenReady(fn) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    queueMicrotask(fn);
+  } else {
+    window.addEventListener('DOMContentLoaded', fn, { once: true });
+  }
+}
+
+whenReady(() => {
+  // Esperar a que estén definidos los elementos y renderizado el shadow
+  Promise.allSettled([
+    customElements.whenDefined('app-root'),
+    customElements.whenDefined('wc-section')
+  ]).then(() => {
+    // Pequeño delay para asegurar que el HTML interno ya está en el shadow
+    setTimeout(hydrateAllSections, 0);
+  });
+});
